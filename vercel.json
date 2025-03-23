@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/index.ts",  
+        "use": "@vercel/node",    
+        "config": {
+          "maxLambdaSize": "50mb" 
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",            
+        "dest": "/src/index.ts" 
+      }
+    ],
+    "ignoreCommand": "tsc",
+    "buildCommand": "nvm use 20; npm run build"         
+  }
