@@ -63,6 +63,10 @@ POST /api/projects
 }
 ```
 
+### Save chat
+```http
+POST /api/chats/
+```
 ### Get Project Chat History
 ```http
 GET /api/chats/:projectId
