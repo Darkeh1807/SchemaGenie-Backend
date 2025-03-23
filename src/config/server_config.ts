@@ -4,10 +4,15 @@ import helmet from "helmet";
 import morgan from "morgan";
 import compression from "compression";
 
+const allowedOrigins = [
+  "https://schemagenie.vercel.app",
+  "http://localhost:5173",
+];
+
 export const configureServer = (app: Application) => {
   app.use(
     cors({
-      origin: "https://schemagenie.vercel.app",
+      origin: allowedOrigins,
       methods: "GET,POST,PUT,DELETE",
       allowedHeaders: "Content-Type,Authorization",
     })
