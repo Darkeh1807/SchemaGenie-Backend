@@ -2,6 +2,8 @@
 
 SchemaGenie is an AI-powered tool that assists users in designing and managing database schemas efficiently. This backend provides API endpoints to store, retrieve, and generate database schemas by Google GEMINI based on user input.
 
+Test App Here: https://schemagenie.vercel.app/
+
 ## Features
 
 - AI-powered schema generation
