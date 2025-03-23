@@ -5,7 +5,13 @@ import morgan from "morgan";
 import compression from "compression";
 
 export const configureServer = (app: Application) => {
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "https://schemagenie.vercel.app",
+      methods: "GET,POST,PUT,DELETE",
+      allowedHeaders: "Content-Type,Authorization",
+    })
+  );
   app.use(compression());
   app.use(helmet());
   app.use(express.json());
