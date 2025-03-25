@@ -1,11 +1,12 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Project } from "../models/project";
 import { ChatHistory } from "../models/chat_history";
 import { ChatWithAI } from "../services/aiService";
 
 export const saveChatMessage = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
   try {
     const { projectId, text } = req.body;
@@ -51,14 +52,14 @@ export const saveChatMessage = async (
 
     res.status(201).json({ message: "Chat saved successfully", chat });
   } catch (error) {
-    console.error("Error saving chat:", error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 };
 
 export const getChatHistory = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
   try {
     const { projectId } = req.params;
@@ -75,7 +76,6 @@ export const getChatHistory = async (
 
     res.status(200).json({ chat });
   } catch (error) {
-    console.error("Error fetching chat history:", error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 };

@@ -5,6 +5,7 @@ import { configureServer } from "./config/server_config";
 import { errorHandler } from "./middlewares/error_handler";
 import chatRouter from "./routes/chat";
 import projectRoutes from "./routes/project";
+import { userRouter } from "./routes/user";
 configDotenv();
 const app = express();
 const PORT = process.env.PORT as string | 5000;
@@ -14,6 +15,7 @@ configureServer(app);
 app.use(errorHandler);
 app.use("/api/chats", chatRouter);
 app.use("/api/projects", projectRoutes);
+app.use("/api/user", userRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello schema genie");
