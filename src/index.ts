@@ -12,13 +12,13 @@ const PORT = process.env.PORT as string | 5000;
 
 configureServer(app);
 
-app.use(errorHandler);
 app.use("/api/chats", chatRouter);
 app.use("/api/projects", projectRoutes);
 app.use("/api/user", userRouter);
-
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello schema genie");
 });
+
+app.use(errorHandler);
 
 startServer(app, PORT as string);

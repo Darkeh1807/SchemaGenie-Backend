@@ -4,8 +4,13 @@ import { timeStamp } from "console";
 
 const UserSchema = new Schema<IUser>({
   email: {
-    type: SchemaTypes.String,
-    password: SchemaTypes.String,
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    minlength: 8,
   },
 });
 
