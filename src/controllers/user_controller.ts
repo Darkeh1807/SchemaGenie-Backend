@@ -48,8 +48,8 @@ export const signIn = async (
 
     const user = await User.findOne({ email });
 
-    if (!user || !user.password) {
-      res.status(404).json({ error: "Invalid user credentials" });
+    if (!user) {
+      res.status(401).json({ error: "Invalid email or password" });
       return;
     }
 
@@ -57,8 +57,9 @@ export const signIn = async (
       password,
       user.password
     );
+
     if (!passwordMatch) {
-      res.status(401).json({ error: "Invalid user credentials" });
+      res.status(401).json({ error: "Invalid email or password" }); // ✅ Keep response consistent
       return;
     }
 
