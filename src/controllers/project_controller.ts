@@ -7,34 +7,36 @@ export const createProject = async (
   next: NextFunction
 ) => {
   try {
-    const { title } = req.body;
+    const { title, userId } = req.body;
 
-    if (!title) {
-      res.status(400).json({ error: "Title is required" });
+    if (!title || !userId) {
+      res.status(400).json({ error: "All fields are required" });
       return;
     }
 
-    const existingProject = await Project.findOne({ title });
-    if (existingProject) {
-      res.status(400).json({ error: "Project title already exists" });
-      return;
-    }
+    // const existingProject = await Project.findOne({ userId });
+    // if (existingProject) {
+    //   res.status(400).json({ error: "Project title already exists" });
+    //   return;
+    // }
 
-    const project = await Project.create({ title });
+    const project = await Project.create({ title, createdBy: userId });
 
     res.status(201).json({ message: "Project created successfully", project });
+    return;
   } catch (error) {
     next(error);
   }
 };
 
-export const getAllProjects = async (
+export const getAllProjectsByUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const projects = await Project.find();
+    const { userId } = req.params;
+    const projects = await Project.find({ createdBy: userId });
     res.status(200).json({ projects });
     return;
   } catch (error) {

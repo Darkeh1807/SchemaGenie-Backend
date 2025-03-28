@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
   createProject,
-  getAllProjects,
+  getAllProjectsByUser,
   getProjectById,
 } from "../controllers/project_controller";
 
 const projectRoutes = Router();
 
 projectRoutes.post("/", createProject);
-projectRoutes.get("/", getAllProjects); 
+projectRoutes.get("/:userId", getAllProjectsByUser); 
 projectRoutes.get("/:projectId", getProjectById); 
 
 export default projectRoutes;

@@ -8,7 +8,7 @@ const ProjectSchema = new Schema<IProject>({
     unique: true,
   },
   createdBy: {
-    type: SchemaTypes.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
