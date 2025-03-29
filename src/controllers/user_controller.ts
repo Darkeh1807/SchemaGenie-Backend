@@ -9,9 +9,9 @@ export const signUp = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !name) {
       res.status(400).json({ error: "All fields are required" });
       return;
     }
@@ -24,7 +24,11 @@ export const signUp = async (
 
     const hashedPassword = await PasswordService.hashPassword(password);
 
-    const newUser = await User.create({ email, password: hashedPassword });
+    const newUser = await User.create({
+      email,
+      password: hashedPassword,
+      name,
+    });
 
     res.status(201).json({ message: "Success", newUser });
     return;
