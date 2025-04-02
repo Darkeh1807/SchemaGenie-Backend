@@ -51,19 +51,27 @@ export const shareProject = async (
   }
 };
 
-export const getUserSharedProjects = (
+export const getUserSharedProjects = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params;
+  try {
+    const { userId } = req.params;
 
-  if (!userId) {
-    res.status(400).json({ error: "userId is required" });
+    if (!userId) {
+      res.status(400).json({ error: "userId is required" });
+      return;
+    }
+
+    const sharedProjects = await Shared.find({ to: userId })
+      .populate("from")
+      .populate("to")
+      .populate("projectId");
+
+    res.status(200).json({ message: "Success", sharedProjects });
     return;
+  } catch (error) {
+    next(error);
   }
-
-
-
-
 };
