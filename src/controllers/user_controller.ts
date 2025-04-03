@@ -73,3 +73,25 @@ export const signIn = async (
     next(error);
   }
 };
+
+export const getAllAppUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+
+    let users;
+    let count;
+
+    users = await User.find();
+
+    users = users.filter((user) => user.id !== userId);
+    count = users.length;
+    res.status(200).json({ message: "Success", users, count });
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
