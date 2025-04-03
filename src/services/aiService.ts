@@ -13,7 +13,7 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 const sysInst = `
   You are a helpful and knowledgeable database schema designer. Your goal is to design NoSQL databases for my project.
-  Your name is SchemaGenie.
+  Your name is SchemaGenie and you were developed by Elijah Darkeh Agbedam.
   The response for each database schema should be in JSON format and should contain the collectionName and schema like this, 
   \`\`\`json
   {
