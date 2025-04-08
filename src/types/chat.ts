@@ -3,6 +3,7 @@ import { IProject } from "./project";
 
 export interface Message {
   role: "user" | "model";
+  sentBy: mongoose.Types.ObjectId | string;
   text: string;
   timestamp: Date;
 }

@@ -2,6 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { Project } from "../models/project";
 import { ChatHistory } from "../models/chat_history";
 import { ChatWithAI } from "../services/aiService";
+import { Message } from "../types/chat";
+
+interface History {
+  role: "user" | "model";
+  parts: { text: string }[];
+}
 
 export const saveChatMessage = async (
   req: Request,
@@ -9,9 +15,9 @@ export const saveChatMessage = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { projectId, text } = req.body;
+    const { projectId, text, sentBy } = req.body;
 
-    if (!projectId || !text) {
+    if (!projectId || !text || !sentBy) {
       res.status(400).json({ error: "Missing required fields" });
       return;
     }
@@ -24,7 +30,7 @@ export const saveChatMessage = async (
 
     let chat = await ChatHistory.findOne({ projectId });
 
-    let history: { role: "user" | "model"; parts: { text: string }[] }[] = [];
+    let history: History[] = [];
 
     if (chat) {
       history = chat.messages.map((msg) => ({
@@ -34,10 +40,20 @@ export const saveChatMessage = async (
     }
 
     const aiResponse = await ChatWithAI(text, history);
-
-    const newMessages = [
-      { role: "user" as "user", text, timestamp: new Date() },
-      { role: "model" as "model", text: aiResponse, timestamp: new Date() },
+    const now = new Date();
+    const newMessages: Message[] = [
+      {
+        role: "user" as "user",
+        sentBy,
+        text,
+        timestamp: now,
+      },
+      {
+        role: "model" as "model",
+        sentBy: "AI",
+        text: aiResponse,
+        timestamp: now,
+      },
     ];
 
     if (chat) {
@@ -75,6 +91,7 @@ export const getChatHistory = async (
     );
 
     res.status(200).json({ chat });
+    return;
   } catch (error) {
     next(error);
   }
