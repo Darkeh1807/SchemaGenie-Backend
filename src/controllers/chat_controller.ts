@@ -85,10 +85,9 @@ export const getChatHistory = async (
       return;
     }
 
-    const chat = await ChatHistory.findOne({ projectId }).populate(
-      "projectId",
-      "title"
-    );
+    const chat = await ChatHistory.findOne({ projectId })
+      .populate("projectId", "title")
+      .populate("messages.sentBy");
 
     res.status(200).json({ chat });
     return;

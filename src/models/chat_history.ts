@@ -3,22 +3,17 @@ import { IChatHistory, Message } from "../types/chat";
 
 const MessageSchema = new Schema<Message>({
   role: {
-    type: String,
+    type: SchemaTypes.String,
     enum: ["user", "model"],
     required: true,
   },
   sentBy: {
-    type: SchemaTypes.Mixed,
+    type: SchemaTypes.ObjectId,
+    ref: "User",
     required: true,
-    validate: {
-      validator: function (val: any) {
-        return mongoose.isValidObjectId(val) || val === "AI";
-      },
-      message: "sentBy must be a valid ObjectId or 'AI'",
-    },
   },
   text: {
-    type: String,
+    type: SchemaTypes.String,
     required: true,
   },
   timestamp: { type: Date, default: Date.now },
