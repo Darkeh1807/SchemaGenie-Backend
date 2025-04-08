@@ -8,7 +8,7 @@ const MessageSchema = new Schema<Message>({
     required: true,
   },
   sentBy: {
-    type: SchemaTypes.ObjectId,
+    type: SchemaTypes.Mixed,
     ref: "User",
     required: true,
   },
