@@ -8,7 +8,7 @@ const MessageSchema = new Schema<Message>({
     required: true,
   },
   sentBy: {
-    type: SchemaTypes.Mixed,
+    type: SchemaTypes.ObjectId,
     ref: "User",
     required: function () {
       return this.role === "user";

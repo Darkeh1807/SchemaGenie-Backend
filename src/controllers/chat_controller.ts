@@ -50,7 +50,6 @@ export const saveChatMessage = async (
       },
       {
         role: "model" as "model",
-        sentBy: "AI",
         text: aiResponse,
         timestamp: now,
       },
