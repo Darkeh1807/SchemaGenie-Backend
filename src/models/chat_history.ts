@@ -8,15 +8,11 @@ const MessageSchema = new Schema<Message>({
     required: true,
   },
   sentBy: {
-    type: SchemaTypes.Mixed,
+    type: SchemaTypes.ObjectId,
     ref: "User",
-    validate: {
-      validator: function (val: any) {
-        return mongoose.isValidObjectId(val) || val === "AI";
-      },
-      message: "sentBy must be a valid ObjectId or 'AI'",
+    required: function () {
+      return this.role === "user";
     },
-    required: true,
   },
   text: {
     type: SchemaTypes.String,
