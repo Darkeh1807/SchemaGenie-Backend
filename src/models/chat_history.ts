@@ -10,6 +10,12 @@ const MessageSchema = new Schema<Message>({
   sentBy: {
     type: SchemaTypes.Mixed,
     ref: "User",
+    validate: {
+      validator: function (val: any) {
+        return mongoose.isValidObjectId(val) || val === "AI";
+      },
+      message: "sentBy must be a valid ObjectId or 'AI'",
+    },
     required: true,
   },
   text: {
