@@ -10,6 +10,7 @@ const allowedOrigins = [
 ];
 
 export const configureServer = (app: Application) => {
+  app.options("*", cors());
   app.use(
     cors({
       origin: allowedOrigins,
